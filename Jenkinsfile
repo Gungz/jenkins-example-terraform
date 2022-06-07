@@ -16,8 +16,8 @@ pipeline {
     }
     stage('terraform plan') {
       steps {
-        sh './terraformw init'
-	sh './terraformw plan'
+        sh './terraformw init -no-color'
+	sh './terraformw plan -no-color'
       }
     }
     stage('terraform apply') {
