@@ -7,7 +7,7 @@ provider "aws" {
   # environment or the global credentials file.
   region = "ap-southeast-1"
 
-  assume_role = {
+  assume_role {
     role_arn = "arn:aws:iam::212316051817:role/TerraformAdministrator"
   }
 }
