@@ -14,10 +14,14 @@ pipeline {
         checkout scm
       }
     }
-    stage('terraform') {
+    stage('terraform plan') {
       steps {
         sh './terraformw init'
 	sh './terraformw plan'
+      }
+    }
+    stage('terraform apply') {
+      steps {
         sh './terraformw apply -auto-approve -no-color'
       }
     }
