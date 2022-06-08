@@ -14,6 +14,12 @@ pipeline {
         checkout scm
       }
     }
+    stage('checkov scan') {
+      steps {
+        sh 'pip3 install -U checkov'
+        sh 'checkov --directory .'
+      }
+    }
     stage('terraform plan') {
       steps {
         sh './terraformw init -no-color'
