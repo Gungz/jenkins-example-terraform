@@ -16,7 +16,7 @@ pipeline {
     }
     stage('checkov scan') {
       steps {
-        sh 'pip3 install -U checkov'
+        sh 'pip install -U checkov'
         sh 'checkov --directory .'
       }
     }
