@@ -1,5 +1,4 @@
 pipeline {
-  agent { label 'linux'}
   options {
     skipDefaultCheckout(true)
   }
@@ -9,34 +8,17 @@ pipeline {
         cleanWs()
       }
     }
-    stage('checkout') {
+    
+    stage('call terraform pipeline') {
       steps {
-        checkout scm
-      }
-    }
-    stage('checkov scan') {
-      steps {
-        sh 'sudo pip3 install -U checkov'
-        sh 'checkov --directory .'
-      }
-    }
-    stage('terraform plan') {
-      steps {
-        sh './terraformw init -no-color'
-	sh './terraformw plan -no-color'
-      }
-    }
-    stage('Approval') {
-      steps {
-        script {
-          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 
-'confirm'] ])
-        }
-      }
-    }
-    stage('terraform apply') {
-      steps {
-        sh './terraformw apply -auto-approve -no-color'
+        build(job: "TerraformParameterized", 
+	      parameters: [
+		  string(name: "TF_REPO_URL", value: "https://github.com/Gungz/jenkins-example-terraform.git")
+		  string(name: "TF_REPO_BRANCH", value: "main")
+	      ],
+	      propagate: true,
+	      wait: true
+	     )
       }
     }
   }
