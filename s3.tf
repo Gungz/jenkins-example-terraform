@@ -15,3 +15,12 @@ resource "aws_s3_bucket" "a" {
     Environment = "Dev"
   }
 }
+
+resource "aws_s3_bucket" "c" {
+  bucket = "their-tf-test-bucket-212316051817"
+
+  tags = {
+    Name        = "Their bucket"
+    Environment = "Dev"
+  }
+}
